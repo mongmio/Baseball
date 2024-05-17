@@ -16,12 +16,14 @@ public:
 	void buildSolutionMap(string& solution);
 	~Baseball();
 	GuessResult guess(string guessing);
-	GuessResult getResult(std::string& guessing);
 private:
-	void verifyArgument(std::string& guessing);
-
-	bool hasSameNumber(std::string& guessing);
-
+	GuessResult getResult(string& guessing);
+	bool isSolved(int strikes);
+	int countStrike(string& guessing);
+	int countBall(string& guessing);
+	bool isStrike(char ch);
+	void verifyArgument(string& guessing);
+	bool hasSameNumber(string& guessing);
 	bool isNumber(char ch);
 	bool solution_map[10]{ false };
 };
@@ -52,22 +54,42 @@ GuessResult Baseball::guess(string guessing)
 GuessResult Baseball::getResult(std::string& guessing)
 {
 	GuessResult result{};
+	result.strikes = countStrike(guessing);
+	result.balls = countBall(guessing);
+	result.solved = isSolved(result.strikes);
+
+	return result;
+}
+
+bool Baseball::isSolved(int strikes)
+{
+	return strikes == 3;
+}
+
+int Baseball::countStrike(string& guessing)
+{
+	int count = 0;
 	for (auto ch : guessing)
 	{
-		if (solution_map[ch - '0'] == true)
-		{
-			result.strikes++;
-		}
-		else
-		{
-			result.balls++;
-		}
+		if (isStrike(ch)) count++;
 	}
-	if (result.strikes == 3)
+	return count;
+}
+
+int Baseball::countBall(std::string& guessing)
+{
+	int count = 0;
+	for (auto ch : guessing)
 	{
-		result.solved = true;
+		if (!isStrike(ch)) count++;
 	}
-	return result;
+	return count;
+}
+
+
+bool Baseball::isStrike(char ch)
+{
+	return solution_map[ch - '0'];
 }
 
 inline void Baseball::verifyArgument(std::string& guessing)
