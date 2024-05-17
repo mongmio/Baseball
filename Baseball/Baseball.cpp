@@ -14,6 +14,13 @@ public:
 		{
 			throw length_error("must be 3 letters");
 		}
+		for (auto ch : str)
+		{
+			if ('0' > ch || '9' < ch)
+			{
+				throw invalid_argument("must be number");
+			}
+		}
 		return false;
 	}
 private:
