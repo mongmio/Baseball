@@ -23,5 +23,6 @@ TEST_F(BaseballTest, InvaidArgumentOfParameter) {
 	assertIllegalArgument("1212");
 	assertIllegalArgument("12s");
 	assertIllegalArgument("aaa");
+	assertIllegalArgument("121");
 }
 

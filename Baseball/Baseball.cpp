@@ -21,10 +21,20 @@ public:
 				throw invalid_argument("must be number");
 			}
 		}
+		bool existence[10]{false};
+		for (auto ch : str)
+		{
+			if (existence[(ch - '0')] == true)
+			{
+				throw invalid_argument("must not have same number");
+			}
+			existence[(ch - '0')] = true;
+		}
 		return false;
 	}
 private:
 	string solution;
+	
 };
 
 Baseball::Baseball(string _solution) : solution(_solution)
