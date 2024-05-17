@@ -18,6 +18,7 @@ protected:
 		}
 	}
 };
+
 TEST_F(BaseballTest, InvaidArgumentOfParameter) {
 	assertIllegalArgument("12");
 	assertIllegalArgument("1212");
@@ -26,3 +27,11 @@ TEST_F(BaseballTest, InvaidArgumentOfParameter) {
 	assertIllegalArgument("121");
 }
 
+
+TEST_F(BaseballTest, Solved) {
+	auto result = game.guess("123");
+
+	EXPECT_EQ(true, result.solved);
+	EXPECT_EQ(3, result.strikes);
+	EXPECT_EQ(0, result.balls);
+}

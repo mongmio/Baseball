@@ -2,16 +2,29 @@
 #include <stdexcept>
 
 using namespace std;
+struct GuessResult
+{
+	bool solved;
+	int strikes;
+	int balls;
+};
 
 class Baseball
 {
 public:
 	Baseball(string _solution);
 	~Baseball();
-	bool guess(string guessing)
+	GuessResult guess(string guessing)
 	{
 		verifyArgument(guessing);
-		return false;
+		GuessResult result{};
+		if (solution == guessing)
+		{
+			result.solved = true;
+			result.strikes = 3;
+			result.balls = 0;
+		}
+		return result;
 	}
 private:
 	void verifyArgument(std::string& guessing)
@@ -25,22 +38,19 @@ private:
 			if (isNumber(ch)) continue;
 			throw invalid_argument("must be number");
 		}
-		if ((guessing[0] == guessing[1]) ||
-			(guessing[1] == guessing[2]) ||
-			(guessing[2] == guessing[0]))
+		if (hasSameNumber(guessing))
 		{
 			throw invalid_argument("must not have same number");
 		}
 	}
-	bool hasSameNumber(bool  existence[10], char ch)
+
+	bool hasSameNumber(std::string& guessing)
 	{
-		if (existence[(ch - '0')] == false)
-		{
-			existence[(ch - '0')] = true;
-			return false;
-		}
-		return true;
+		return (guessing[0] == guessing[1]) ||
+			(guessing[1] == guessing[2]) ||
+			(guessing[2] == guessing[0]);
 	}
+
 	bool isNumber(char ch)
 	{
 		return '0' <= ch && '9' >= ch;
