@@ -35,3 +35,11 @@ TEST_F(BaseballTest, Solved) {
 	EXPECT_EQ(3, result.strikes);
 	EXPECT_EQ(0, result.balls);
 }
+
+TEST_F(BaseballTest, OneStrikeTwoBall) {
+	auto result = game.guess("145");
+
+	EXPECT_EQ(false, result.solved);
+	EXPECT_EQ(1, result.strikes);
+	EXPECT_EQ(2, result.balls);
+}

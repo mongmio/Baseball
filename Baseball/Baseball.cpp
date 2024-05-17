@@ -18,11 +18,21 @@ public:
 	{
 		verifyArgument(guessing);
 		GuessResult result{};
-		if (solution == guessing)
+
+		for (auto ch : guessing)
+		{
+			if (solution_map[ch - '0'] == true)
+			{
+				result.strikes++;
+			}
+			else
+			{
+				result.balls++;
+			}
+		}
+		if (result.strikes == 3)
 		{
 			result.solved = true;
-			result.strikes = 3;
-			result.balls = 0;
 		}
 		return result;
 	}
@@ -56,11 +66,15 @@ private:
 		return '0' <= ch && '9' >= ch;
 	}
 	string solution;
-	
+	bool solution_map[10]{ false };
 };
 
 Baseball::Baseball(string _solution) : solution(_solution)
 {
+	for (auto ch : solution)
+	{
+		solution_map[ch - '0'] = true;
+	}
 }
 
 Baseball::~Baseball()
