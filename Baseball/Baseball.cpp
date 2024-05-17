@@ -22,20 +22,28 @@ private:
 		}
 		for (auto ch : guessing)
 		{
-			if ('0' > ch || '9' < ch)
-			{
-				throw invalid_argument("must be number");
-			}
+			if (isNumber(ch)) continue;
+			throw invalid_argument("must be number");
 		}
-		bool existence[10]{ false };
-		for (auto ch : guessing)
+		if ((guessing[0] == guessing[1]) ||
+			(guessing[1] == guessing[2]) ||
+			(guessing[2] == guessing[0]))
 		{
-			if (existence[(ch - '0')] == true)
-			{
-				throw invalid_argument("must not have same number");
-			}
-			existence[(ch - '0')] = true;
+			throw invalid_argument("must not have same number");
 		}
+	}
+	bool hasSameNumber(bool  existence[10], char ch)
+	{
+		if (existence[(ch - '0')] == false)
+		{
+			existence[(ch - '0')] = true;
+			return false;
+		}
+		return true;
+	}
+	bool isNumber(char ch)
+	{
+		return '0' <= ch && '9' >= ch;
 	}
 	string solution;
 	
