@@ -5,13 +5,23 @@ class BaseballTest : public testing::Test
 {
 protected:
 	Baseball game{"123"};
+	void assertIllegalArgument(string guessing)
+	{
+		try
+		{
+			game.guess(guessing);
+			FAIL();
+		}
+		catch (exception e)
+		{
+			// PASS
+		}
+	}
 };
-TEST_F(BaseballTest, InvaidLengthOfParameter) {
-	EXPECT_THROW(game.guess("12"), length_error);
-	EXPECT_THROW(game.guess("1212"), length_error);
+TEST_F(BaseballTest, InvaidArgumentOfParameter) {
+	assertIllegalArgument("12");
+	assertIllegalArgument("1212");
+	assertIllegalArgument("12s");
+	assertIllegalArgument("aaa");
 }
 
-TEST_F(BaseballTest, InvaidArgumentOfParameter) {
-	EXPECT_THROW(game.guess("12s"), invalid_argument);
-	EXPECT_THROW(game.guess("aaa"), invalid_argument);
-}
